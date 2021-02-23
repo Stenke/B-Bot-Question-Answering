@@ -39,51 +39,62 @@ class Model:
 
         return model, tokenizer
 
-    def predict(self, context, question):
+    def answer_question(question, answer_text):
+    '''
+    Takes a `question` string and an `answer_text` string (which contains the
+    answer), and identifies the words within the `answer_text` that are the
+    answer. Prints them out.
+    '''
+    # ======== Tokenize ========
+    # Apply the tokenizer to the input text, treating them as a text-pair.
+    input_ids = tokenizer.encode(question, answer_text)
 
-        context = context.lower()
-        question = question.lower()
+    # Report how long the input sequence is.
+    print('Query has {:,} tokens.\n'.format(len(input_ids)))
 
-        examples = read_squad_examples(context, question)
-        features = convert_examples_to_features(
-            examples, self.tokenizer, self.max_seq_length, self.doc_stride, self.max_query_length)
+    # ======== Set Segment IDs ========
+    # Search the input_ids for the first instance of the `[SEP]` token.
+    sep_index = input_ids.index(tokenizer.sep_token_id)
 
-        # Convert to Tensors and build dataset
-        all_input_ids = torch.tensor(
-            [f.input_ids for f in features], dtype=torch.long)
-        all_input_mask = torch.tensor(
-            [f.input_mask for f in features], dtype=torch.long)
-        all_segment_ids = torch.tensor(
-            [f.segment_ids for f in features], dtype=torch.long)
-        all_example_index = torch.arange(
-            all_input_ids.size(0), dtype=torch.long)
-        dataset = TensorDataset(all_input_ids, all_input_mask, all_segment_ids,
-                                all_example_index)
+    # The number of segment A tokens includes the [SEP] token istelf.
+    num_seg_a = sep_index + 1
 
-        eval_sampler = SequentialSampler(dataset)
-        eval_dataloader = DataLoader(
-            dataset, sampler=eval_sampler, batch_size=self.eval_batch_size)
+    # The remainder are segment B.
+    num_seg_b = len(input_ids) - num_seg_a
 
-        all_results = []
-        for batch in (eval_dataloader):
-            batch = tuple(t for t in batch)
-            with torch.no_grad():
-                inputs = {'input_ids':      batch[0],
-                          'attention_mask': batch[1]
-                          }
-                example_indices = batch[3]
-                outputs = self.model(**inputs)
+    # Construct the list of 0s and 1s.
+    segment_ids = [0]*num_seg_a + [1]*num_seg_b
 
-            for i, example_index in enumerate(example_indices):
-                eval_feature = features[example_index.item()]
-                unique_id = int(eval_feature.unique_id)
-                result = RawResult(unique_id=unique_id,
-                                   start_logits=to_list(outputs[0][i]),
-                                   end_logits=to_list(outputs[1][i]))
-                all_results.append(result)
+    # There should be a segment_id for every input token.
+    assert len(segment_ids) == len(input_ids)
 
-        answer = write_predictions(examples, features, all_results,
-                                   self.do_lower_case, self.n_best_size, self.max_answer_length)
-        return answer
+    # ======== Evaluate ========
+    # Run our example question through the model.
+    start_scores, end_scores = model(torch.tensor([input_ids]), # The tokens representing our input text.
+                                    token_type_ids=torch.tensor([segment_ids])) # The segment IDs to differentiate question from answer_text
+
+    # ======== Reconstruct Answer ========
+    # Find the tokens with the highest `start` and `end` scores.
+    answer_start = torch.argmax(start_scores)
+    answer_end = torch.argmax(end_scores)
+
+    # Get the string versions of the input tokens.
+    tokens = tokenizer.convert_ids_to_tokens(input_ids)
+
+    # Start with the first token.
+    answer = tokens[answer_start]
+
+    # Select the remaining answer tokens and join them with whitespace.
+    for i in range(answer_start + 1, answer_end + 1):
+        
+        # If it's a subword token, then recombine it with the previous token.
+        if tokens[i][0:2] == '##':
+            answer += tokens[i][2:]
+        
+        # Otherwise, add a space then the token.
+        else:
+            answer += ' ' + tokens[i]
+
+    print('Answer: "' + answer + '"')
 
 model = Model('model')
