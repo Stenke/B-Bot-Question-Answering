@@ -52,11 +52,11 @@ Here's a quick peak at the at Ada in action. After defining an answer_question f
 
 ##### Context
 <p align="center">
-  <img src="https://github.com/Stenke/B-Bot-Question-Answering/blob/main/Images/ada-wiki.png" width="1200" length="800"/>
+  <img src="https://github.com/Stenke/B-Bot-Question-Answering/blob/main/Images/ada-wiki.png" width="1600" length="1000"/>
 </p>
   
 ##### Answer
-<img src="https://github.com/Stenke/B-Bot-Question-Answering/blob/main/Images/context_ada.png" width="600" length="400"/>
+<img src="https://github.com/Stenke/B-Bot-Question-Answering/blob/main/Images/qa.png" width="500" length="300"/>
 
 The results here are pretty good and even more impressive with a nice front-end using Flask or Dash. Since the model is pre-loaded, the QA process is actually quite fast - good when considering using this model in the wild.
 
@@ -71,6 +71,8 @@ But as we work to eliminate biases in AI, we forget how AI can reduce bias in hu
 And in the words of Brene Brown, “we’re not here to get it right - we’re here to be right”.
 
 ##### Ada achieves this at scale.
+
+
 
 <img src="https://github.com/Stenke/B-Bot-Question-Answering/blob/main/Images/sometimes-I-start.gif" width="600" length="400"/>
 
