@@ -10,7 +10,6 @@ Countless events surprised some portion of the population - the truth being hidd
 Yet, even after we acknowledged the misalignment, words were left unsaid.
 
 ##### The problem is we’re afraid to ask the questions that matter.
-<br /> <br />
 
 There are wonderful podcasts, books, and blogs that address some of the most sensitive issues: sex, race, religion, politics, etc.
 Though these are great resources, they lack the intimacy of dialogue and the self-reflection inherent in asking a vulnerable question.
@@ -18,13 +17,12 @@ Ada.ai intends to promote these conversations at scale.
 
 
 # The Data
-Data was sourced from Twitter using Twint. The accounts were selected for their ecletic humor, inspirational quotes, and emotional intelligence. <br /> <br />
-The following accounts were sourced to fine-tune our GPT-2 language model:
-1. Simon Sinek
-2. Brene Brown
-3. Conan O'Brien
-4. Lex Fridman
-5. Tim Siedell
-6. Dalai Lama
-7. Pourmecoffee
-8. Steve Martin
+The BERT model was pre-trained on unlabeled data from the BookCorpus and English Wikipedia articles boasting 800M and 2,500M words respectively. Further fine-tuning to add an additional layer and teach Ada the ways of QA was done using Stanford's SQuAD 2.0 dataset. This is composed of 150,000 questions from 500+ Wiki articles that were created by Mechanical Turk users. The version 2.0 included questions with no answers, which is important when performing QA in the wild.
+ 
+ <img src="https://github.com/Stenke/B-Bot-Question-Answering/blob/main/Images/squad-ex.png" width="500"   length="700" />
+
+Additional data was webscraped from Brené Brown's podcast transcripts. The intention of these 41 transcripts is to be used for both creating domain-specific QA dataset for further fine-tuning as well as articles for our document retrieval system.
+
+ <img src="https://github.com/Stenke/B-Bot-Question-Answering/blob/main/Images/bb-transcript.png" width="400"   length="600" />
+
+
