@@ -21,11 +21,9 @@ Ada.ai intends to promote these conversations at scale.
 ## The Data
 The BERT model was pre-trained on unlabeled data from the BookCorpus and English Wikipedia articles boasting 800M and 2,500M words respectively. Further fine-tuning to add an additional layer and teach Ada the ways of QA was done using Stanford's SQuAD 2.0 dataset. This is composed of 150,000 questions from 500+ Wiki articles that were created by Mechanical Turk users. The version 2.0 included questions with no answers, which is important when performing QA in the wild.
  
- <img src="https://github.com/Stenke/B-Bot-Question-Answering/blob/main/Images/squad-ex.png" width="1000"   length="1200" />
+ <img src="https://github.com/Stenke/B-Bot-Question-Answering/blob/main/Images/squad-ex.png" width="800"   length="1000" />
 
 Additional data was webscraped from Brené Brown's podcast transcripts. The intention of these 41 transcripts is to be used for both creating domain-specific QA dataset for further fine-tuning as well as articles for our document retrieval system.
-
- <img src="https://github.com/Stenke/B-Bot-Question-Answering/blob/main/Images/bb-transcript.png" width="600"   length="800" />
  
  ## Methods + Testing
 The pre-trained model was sourced using Huggingface's transformer library. For our case, we used the BertForQuestionAnswering import along with its related tokenizers. Additionally, Huggingface provides a library imports for working with the SQuAD datasets. Below is an example of converting strings to tokens and masking certain tokens to add a bit of chaos to the learning process.
@@ -45,7 +43,7 @@ After Ada is done learning, we look at the loss and validate the model on the te
 <img src="https://github.com/Stenke/B-Bot-Question-Answering/blob/main/Images/training-loss-2.png" width="850" length="600"/>
 
 ##### And finally, the results.
-<img src="https://github.com/Stenke/B-Bot-Question-Answering/blob/main/Images/train-score.png" width="300" length="300"/>
+<img src="https://github.com/Stenke/B-Bot-Question-Answering/blob/main/Images/train-score.png" width="400" length="400"/>
 
 Our main scores here are the exact match and F1. Exact match is where our answer is taken straight from the context and matches word for word in order. Here we ended up with a 68.5% exact match rate after the first epoch. F1-score is a little tricker; we're looking at the number of shared words in our model's prediction and the actual answer as provided in the test set. Recall is the ratio of shared words (between predicted and actual answer) over the total number of words in the true answer. Precision here is the ratio of shared words over the total number of words in the prediction.
 
@@ -53,8 +51,10 @@ Our main scores here are the exact match and F1. Exact match is where our answer
 Here's a quick peak at the at Ada in action. After defining an answer_question function, we feed in context (limited to 512 tokens) and question. After that, Ada assigns most likely start words probabilistically and then the final word. The answer is composed of the most likely tokens in sequential order. Check it out!
 
 ##### Context
-<img src="https://github.com/Stenke/B-Bot-Question-Answering/blob/main/Images/context_ada.png" width="2000" length="1500"/>
-
+<p align="center">
+  <img src="https://github.com/Stenke/B-Bot-Question-Answering/blob/main/Images/ada-wiki.png" width="1200" length="800"/>
+</p>
+  
 ##### Answer
 <img src="https://github.com/Stenke/B-Bot-Question-Answering/blob/main/Images/context_ada.png" width="600" length="400"/>
 
