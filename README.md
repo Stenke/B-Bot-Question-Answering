@@ -24,5 +24,25 @@ The BERT model was pre-trained on unlabeled data from the BookCorpus and English
 Additional data was webscraped from Brené Brown's podcast transcripts. The intention of these 41 transcripts is to be used for both creating domain-specific QA dataset for further fine-tuning as well as articles for our document retrieval system.
 
  <img src="https://github.com/Stenke/B-Bot-Question-Answering/blob/main/Images/bb-transcript.png" width="600"   length="800" />
+ 
+ ## Methods + Testing
+The pre-trained model was sourced using Huggingface's transformer library. For our case, we used the BertForQuestionAnswering import along with its related tokenizers. Additionally, Huggingface provides a library imports for working with the SQuAD datasets. Below is an example of converting strings to tokens and masking certain tokens to add a bit of chaos to the learning process.
+
+<img src="https://github.com/Stenke/B-Bot-Question-Answering/blob/main/Images/Screen%20Shot%202021-03-02%20at%207.20.31%20PM.png" width="900" length="700"/>
+
+Following the data tokenizing, class tagging [CLS] and [SEP], and parameter initialization, we send the model out to study.
+
+<img src="this is model arch" width="900" length="700"/>
+
+After Ada is done learning, we look at the loss and validate the model on the test set. Below are the results after one epoch.
+
+##### Loading model and looking at the architecture
+<img src="https://github.com/Stenke/B-Bot-Question-Answering/blob/main/Images/training-arch.png" width="900" length="700"/>
+
+##### Looking at the loss (log loss on the softmax layer)
+<img src="https://github.com/Stenke/B-Bot-Question-Answering/blob/main/Images/training-loss-2.png" width="900" length="700"/>
+
+##### And finally, the results.
+<img src="https://github.com/Stenke/B-Bot-Question-Answering/blob/main/Images/train-score.png" width="900" length="700"/>
 
 
