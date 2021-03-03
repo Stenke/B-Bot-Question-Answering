@@ -23,6 +23,6 @@ The BERT model was pre-trained on unlabeled data from the BookCorpus and English
 
 Additional data was webscraped from Brené Brown's podcast transcripts. The intention of these 41 transcripts is to be used for both creating domain-specific QA dataset for further fine-tuning as well as articles for our document retrieval system.
 
- <img src="https://github.com/Stenke/B-Bot-Question-Answering/blob/main/Images/bb-transcript.png" width="1000"   length="1200" />
+ <img src="https://github.com/Stenke/B-Bot-Question-Answering/blob/main/Images/bb-transcript.png" width="800"   length="1000" />
 
 
