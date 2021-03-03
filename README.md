@@ -16,13 +16,13 @@ Though these are great resources, they lack the intimacy of dialogue and the sel
 Ada.ai intends to promote these conversations at scale.
 
 
-# The Data
+## The Data
 The BERT model was pre-trained on unlabeled data from the BookCorpus and English Wikipedia articles boasting 800M and 2,500M words respectively. Further fine-tuning to add an additional layer and teach Ada the ways of QA was done using Stanford's SQuAD 2.0 dataset. This is composed of 150,000 questions from 500+ Wiki articles that were created by Mechanical Turk users. The version 2.0 included questions with no answers, which is important when performing QA in the wild.
  
- <img src="https://github.com/Stenke/B-Bot-Question-Answering/blob/main/Images/squad-ex.png" width="500"   length="700" />
+ <img src="https://github.com/Stenke/B-Bot-Question-Answering/blob/main/Images/squad-ex.png" width="1000"   length="1200" />
 
 Additional data was webscraped from Brené Brown's podcast transcripts. The intention of these 41 transcripts is to be used for both creating domain-specific QA dataset for further fine-tuning as well as articles for our document retrieval system.
 
- <img src="https://github.com/Stenke/B-Bot-Question-Answering/blob/main/Images/bb-transcript.png" width="400"   length="600" />
+ <img src="https://github.com/Stenke/B-Bot-Question-Answering/blob/main/Images/bb-transcript.png" width="1000"   length="1200" />
 
 
